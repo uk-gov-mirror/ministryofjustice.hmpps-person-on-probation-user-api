@@ -8,8 +8,8 @@ import org.springframework.http.HttpHeaders
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.jdbc.SqlMergeMode
 import org.springframework.test.web.reactive.server.WebTestClient
-import uk.gov.justice.digital.hmpps.hmppspersononprobationuserapi.helpers.JwtAuthHelper
 import uk.gov.justice.digital.hmpps.hmppspersononprobationuserapi.helpers.TestBase
+import uk.gov.justice.hmpps.test.kotlin.auth.JwtAuthorisationHelper
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ActiveProfiles("test")
@@ -20,7 +20,7 @@ abstract class IntegrationTestBase : TestBase() {
   lateinit var webTestClient: WebTestClient
 
   @Autowired
-  protected lateinit var jwtAuthHelper: JwtAuthHelper
+  protected lateinit var jwtAuthorisationHelper: JwtAuthorisationHelper
 
   init {
     // Resolves an issue where Wiremock keeps previous sockets open from other tests causing connection resets
@@ -31,8 +31,7 @@ abstract class IntegrationTestBase : TestBase() {
     user: String = "PERSONONPROBATION_ADM",
     roles: List<String> = listOf(),
     scopes: List<String> = listOf(),
-    authSource: String = "none",
-  ): (HttpHeaders) -> Unit = jwtAuthHelper.setAuthorisation(user, roles, scopes, authSource)
+  ): (HttpHeaders) -> Unit = jwtAuthorisationHelper.setAuthorisationHeader(username = user, roles = roles, scope = scopes)
 }
 
 fun readFile(file: String): String = Resources.getResource(file).readText()

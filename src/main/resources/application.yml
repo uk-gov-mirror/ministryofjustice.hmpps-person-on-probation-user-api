@@ -110,3 +110,5 @@ management:
         time-to-live: 2000ms
     prometheus:
       enabled: true
+
+springdoc.swagger-ui.version: 5.32.1
