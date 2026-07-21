@@ -112,7 +112,3 @@ tasks.named<BootRun>("bootRun") {
   systemProperty("spring.profiles.active", project.findProperty("profiles")?.toString() ?: "dev")
   systemProperty("server.port", project.findProperty("port")?.toString() ?: "8080")
 }
-
-dependencyCheck {
-  nvd.datafeedUrl = "file:///opt/vulnz/cache"
-}
